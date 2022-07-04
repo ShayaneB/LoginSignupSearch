@@ -13,14 +13,14 @@ class Login extends Form {
   state = {
     loading: false,
     data: {
-      email: "",
+      username: "",
       password: "",
     },
     errors: {},
   };
 
   schema = {
-    email: Joi.string()
+    username: Joi.string()
       .required()
       .error(() => {
         return { message: "*Required" };
@@ -68,11 +68,14 @@ class Login extends Form {
     this.setState({
       loading: true,
     });
-    const data = {
-      email: this.state.data.email,
-      password: this.state.data.password,
-    };
-    this.props.login(data, this.callback);
+    setJwt(this.state.data.username);
+    this.props.history.push("/dashboard");
+
+    // const data = {
+    //   username: this.state.data.username,
+    //   password: this.state.data.password,
+    // };
+    // this.props.login(data, this.callback);
   };
 
   callback = (res) => {
@@ -95,7 +98,7 @@ class Login extends Form {
       <form onSubmit={this.handleSubmit}>
         <h3>Sign In</h3>
 
-        {this.renderInput("email", "Email address", "email")}
+        {this.renderInput("username", "Username", "username")}
 
         {this.renderInput("password", "Password", "password")}
 

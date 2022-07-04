@@ -4,8 +4,9 @@ import axios from "axios";
 import Form from "../common/form";
 
 import Joi from "joi-browser";
-import { clearAllToken } from "../services/localStorageServices";
+import { clearAllToken} from "../services/localStorageServices";
 import SubmitBtn from "../common/submitBtn";
+import Header from "./header";
 
 class Dashboard extends Form {
   state = {
@@ -62,49 +63,51 @@ class Dashboard extends Form {
     );
 
     return (
-      <form className="search-results" onSubmit={this.handleSubmit}>
-        <h3>Search</h3>
+      <>
+        <Header />
+        <form className="search-results" onSubmit={this.handleSubmit}>
+          <h3>Search</h3>
 
-        {this.renderInput("search", "Start Typing to search", "text")}
+          {this.renderInput("search", "Start Typing to search", "text")}
 
-        <SubmitBtn
-          btnClass="btn btn-primary"
-          disabled={this.state.loading}
-          label={"Submit"}
-        />
+          <SubmitBtn
+            btnClass="btn btn-primary"
+            disabled={this.state.loading}
+            label={"Submit"}
+          />
 
-        <div>
-          {this.state.searchResults &&
-            this.state.searchResults.map((searchResult, index) => {
-              return (
-                <div key={index}>
-                  <div className="details">
-                    <img
-                      alt="Nothing to display"
-                      src={searchResult.owner && searchResult.owner.avatar_url}
-                    />
-                    <p>
-                      Name : {searchResult.full_name && searchResult.full_name}
-                    </p>
-                    <p>
-                      Description:{" "}
-                      {searchResult.description && searchResult.description}{" "}
-                    </p>
-                    <p>
-                      Watchers Count :{" "}
-                      {searchResult.watchers_count &&
-                        searchResult.watchers_count}
-                    </p>
+          <div>
+            {this.state.searchResults &&
+              this.state.searchResults.map((searchResult, index) => {
+                return (
+                  <div key={index}>
+                    <div className="details">
+                      <img
+                        alt="Nothing to display"
+                        src={
+                          searchResult.owner && searchResult.owner.avatar_url
+                        }
+                      />
+                      <p>
+                        Name :{" "}
+                        {searchResult.full_name && searchResult.full_name}
+                      </p>
+                      <p>
+                        Description:{" "}
+                        {searchResult.description && searchResult.description}{" "}
+                      </p>
+                      <p>
+                        Watchers Count :{" "}
+                        {searchResult.watchers_count &&
+                          searchResult.watchers_count}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-        </div>
-
-        <a href="#!" className="wcl-link" onClick={this.logout}>
-          Logout
-        </a>
-      </form>
+                );
+              })}
+          </div>
+        </form>
+      </>
     );
   }
 }
